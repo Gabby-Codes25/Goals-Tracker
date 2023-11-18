@@ -1,0 +1,23 @@
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Navbar from '../components/navbar'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Goals',
+  description: 'Goal site for adding goals',
+  name: "format-detection",
+  content: "telephone=no, date=no, email=no, address=no"
+}
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+      </body>
+    </html>
+  )
+}
