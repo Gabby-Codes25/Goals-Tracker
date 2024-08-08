@@ -22,20 +22,20 @@ function LoginPage() {
         password,
       });
 
-      // Set the access_token cookie and store userId in localStorage
+      // Set the access_token cookie
       setCookies('access_token', response.data.token);
-      window.localStorage.setItem('userId', response.data.userId);
 
+      // Clear the form fields
+      setEmail('');
+      setPassword('');
+      
       // Use router to navigate to the home page
-      router.push("/");
+      router.push("/Goal");
     } catch (error) {
       router.push('/Login');
       console.error('Login failed:', error);
     }
 
-    // Clear the form fields
-    setEmail('');
-    setPassword('');
   };
 
   return (

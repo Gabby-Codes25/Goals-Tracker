@@ -6,9 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Goals',
-  description: 'Goal site for adding goals',
-  name: "format-detection",
-  content: "telephone=no, date=no, email=no, address=no"
+  description: 'Goal site for adding goals'
 }
 
 export default function RootLayout({ children }) {

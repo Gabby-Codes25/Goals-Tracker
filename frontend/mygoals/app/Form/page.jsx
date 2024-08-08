@@ -23,7 +23,7 @@ function Form() {
             if (response.status === 200) {
                 setTitle('');
                 setBody('');
-                router.push("/")
+                router.push("/Goal")
             }
         } catch (error) {
             console.error('Error submitting goal:', error);
