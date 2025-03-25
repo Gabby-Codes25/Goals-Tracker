@@ -4,7 +4,7 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../app/Firebase/firebaseAuth';
 
 const DeleteGoal = ({ goalId, onDelete }) => {
-  const handleDelete = async () => { // No need to pass goalId here, it's already in scope
+  const handleDelete = async () => {
     try {
       const goalRef = doc(db, "goals", goalId);
       await deleteDoc(goalRef);
