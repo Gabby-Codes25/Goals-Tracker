@@ -41,6 +41,13 @@ function Navbar() {
           <ul className="flex flex-col md:flex-row gap-4 text-white text-lg">
             {cookies.access_token && (
               <li>
+                <Link href="/Goal" className="hover:text-gray-200">
+                  Goals
+                </Link>
+              </li>
+            )}
+            {cookies.access_token && (
+              <li>
                 <Link href="/Form" className="hover:text-gray-200">
                   Add Goal
                 </Link>

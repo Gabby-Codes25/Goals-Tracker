@@ -17,8 +17,7 @@ function GoalsPage() {
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const goalsRef = collection(db, "goals"); // Define inside useEffect to prevent re-renders
-        const querySnapshot = await getDocs(goalsRef);
+        const querySnapshot = await getDocs(collection(db, "goals"));
         const goalsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setGoals(goalsList);
       } catch (error) {
@@ -28,21 +27,18 @@ function GoalsPage() {
       }
     };
   
-    if (typeof window !== "undefined") fetchGoals(); // Ensure only runs on client
+    fetchGoals(); // Ensure only runs on client
   }, []); // Empty dependency array ensures it runs once
   
 
   //Add Goal to Firestore
   const addGoal = async (newGoal) => {
     try {
-        const goalsCollectionRef = collection(db, "goals");
-        const docRef = await addDoc(goalsCollectionRef, newGoal);
-        
-        setGoals((prevGoals) => [...prevGoals, { id: docRef.id, ...newGoal }]); // Functional update
-
-        console.log("Goal successfully added:", docRef.id);
-    } catch (error) {
-        console.error("Error adding goal:", error);
+      await addDoc(collection(db, "goals"), {
+        ...newGoal
+      })
+    } catch {
+      console.error(error);
     }
 };
 

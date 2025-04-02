@@ -4,6 +4,7 @@ import {
   getAuth, 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
+  sendEmailVerification,
   signOut 
 } from "firebase/auth";
 import { 
@@ -29,24 +30,12 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // 🔹 Sign Up Function
-export const signUp = async (name, email, password) => {
-  if (!name || !email || !password) {
-    throw new Error("All fields (name, email, password) are required");
-  }
-
+export const signUp = async ( email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    sendEmailVerification(userCredential.user);
 
-    // Store user data in Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      name: name,
-      email: email,
-      createdAt: new Date(),
-    });
-
-    return user;
+    return userCredential;
   } catch (error) {
     console.error("Signup Error:", error.code, error.message);
     throw new Error(error.message || "Signup failed.");
@@ -55,23 +44,13 @@ export const signUp = async (name, email, password) => {
 
 // 🔹 Login Function
 export const signIn = async (email, password) => {
-  if (!email || !password) {
-    throw new Error("Email and password are required.");
-  }
-
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("✅ Login successful:", userCredential.user);
-
-    // ✅ Return the user properly
     return userCredential.user;
   } catch (error) {
-    console.error("🔥 Login Error:", error.code, error.message);
-    throw new Error("Login failed. Check your email and password.");
+    console.error("Login Error:", error.code, error.message);
   }
 };
-
-
 
 // 🔹 Logout Function
 export const logout = async () => {
@@ -80,7 +59,6 @@ export const logout = async () => {
     console.log("User logged out");
   } catch (error) {
     console.error("Logout Error:", error.code, error.message);
-    throw error;
   }
 };
 
